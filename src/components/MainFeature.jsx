@@ -271,23 +271,27 @@ const MainFeature = () => {
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
                       </div>
                     ) : availableTimeSlots.length > 0 ? (
-                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-                        {availableTimeSlots.map(timeSlot => (
-                          <button
-                            key={timeSlot}
-                            onClick={() => handleTimeSelect(timeSlot)}
-                            className={`py-2 px-3 rounded-lg text-center transition-colors ${
-                              time === timeSlot
-                                ? 'bg-primary text-white'
-                                : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600'
-                            }`}
-                          >
-                            {timeSlot}
-                          </button>
-                        ))}
+                      <div>
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                          {availableTimeSlots.map(timeSlot => (
+                            <button
+                              key={timeSlot}
+                              onClick={() => handleTimeSelect(timeSlot)}
+                              className={`py-2 px-3 rounded-lg text-center transition-colors ${
+                                time === timeSlot
+                                  ? 'bg-primary text-white'
+                                  : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600'
+                              }`}
+                            >
+                              {timeSlot}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                      <p className="text-surface-500 dark:text-surface-400 py-2">No available time slots for this date.</p>
-                    </p>
+                    ) : (
+                      <div className="text-surface-500 dark:text-surface-400 py-2">
+                        No available time slots for this date.
+                      </div>
                   )}
                 </div>
                 
