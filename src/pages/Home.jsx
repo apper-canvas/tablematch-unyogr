@@ -95,7 +95,6 @@ const Home = () => {
   const handleReserveTable = (restaurant) => {
     setSelectedRestaurant(restaurant);
     toast.info(`Preparing reservation for ${restaurant.name}`);
-  };
 
   const filteredRestaurants = restaurants.filter(restaurant => {
     const matchesSearch = restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
