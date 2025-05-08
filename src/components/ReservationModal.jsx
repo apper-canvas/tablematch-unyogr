@@ -42,7 +42,6 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
       setIsLoading(true);
       // Simulate API call for available time slots
       setTimeout(() => {
-        const mockTimeSlots = ['17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'];
         // Organized time slots by meal period
         const mockTimeSlots = {
           lunch: ['11:30', '12:00', '12:30', '13:00', '13:30', '14:00'],
@@ -55,7 +54,8 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
         if (date === today) {
           // For demo purposes, just showing all slots
         }
-        
+        setAvailableTimeSlots(mockTimeSlots);
+        setIsLoading(false);
       }, 800);
     }
   }, [date]);
