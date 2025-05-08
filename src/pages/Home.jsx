@@ -94,8 +94,9 @@ const Home = () => {
 
   const handleReserveTable = (restaurant) => {
     setSelectedRestaurant(restaurant);
-    toast.info(`Preparing reservation for ${restaurant.name}`);
+  };
 
+  // Filter the restaurants based on search query and cuisine
   const filteredRestaurants = restaurants.filter(restaurant => {
     const matchesSearch = restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          restaurant.address.toLowerCase().includes(searchQuery.toLowerCase());
