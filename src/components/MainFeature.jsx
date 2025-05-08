@@ -10,7 +10,8 @@ const MainFeature = () => {
   const [showReservationForm, setShowReservationForm] = useState(false);
   
   // Reservation form state initialized with today's date
-  const [date, setDate] = useState('');
+  const today = new Date().toISOString().split('T')[0];
+  const [date, setDate] = useState(today);
   const [time, setTime] = useState('');
   const [partySize, setPartySize] = useState(2);
   const [name, setName] = useState('');
@@ -62,9 +63,6 @@ const MainFeature = () => {
       }, 800);
     }
   }, [date]);
-
-  // Get today's date in YYYY-MM-DD format for min date in date picker
-  const today = new Date().toISOString().split('T')[0];
 
   const handleDateChange = (e) => {
     const selectedDate = e.target.value;
@@ -122,7 +120,7 @@ const MainFeature = () => {
 
   const handleStartOver = () => {
     setDate('');
-    setTime('');
+    setTime(today);
     setPartySize(2);
     setName('');
     setEmail('');
@@ -234,6 +232,7 @@ const MainFeature = () => {
                       type="date"
                       id="date"
                       min={today}
+                      max={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
                       value={date}
                       onChange={handleDateChange}
                       className="input"
@@ -266,8 +265,8 @@ const MainFeature = () => {
                     <ClockIcon className="w-4 h-4" /> Select Time
                   </label>
                   
-                  {date ? (
-                    isLoading ? (
+                  {!date && <p className="text-red-500">Please select a date first</p>}
+                  {isLoading ? (
                       <div className="flex justify-center py-6">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
                       </div>
@@ -287,14 +286,7 @@ const MainFeature = () => {
                           </button>
                         ))}
                       </div>
-                    ) : (
-                      <p className="text-surface-500 dark:text-surface-400 py-2">
-                        No available time slots for this date.
-                      </p>
-                    )
-                  ) : (
-                    <p className="text-surface-500 dark:text-surface-400 py-2">
-                      Please select a date first to see available times.
+                      <p className="text-surface-500 dark:text-surface-400 py-2">No available time slots for this date.</p>
                     </p>
                   )}
                 </div>

@@ -5,7 +5,8 @@ import { format } from 'date-fns';
 import getIcon from '../utils/iconUtils';
 
 const ReservationModal = ({ isOpen, onClose, restaurant }) => {
-  const [date, setDate] = useState('');
+  const today = new Date().toISOString().split('T')[0];
+  const [date, setDate] = useState(today);
   const [time, setTime] = useState('');
   const [partySize, setPartySize] = useState(2);
   const [name, setName] = useState('');
@@ -24,7 +25,7 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
   // Reset form when modal closes
   useEffect(() => {
     if (!isOpen) {
-      setDate('');
+      setDate(today);
       setTime('');
       setPartySize(2);
       setName('');
@@ -47,9 +48,6 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
       }, 800);
     }
   }, [date]);
-
-  // Get today's date in YYYY-MM-DD format for min date in date picker
-  const today = new Date().toISOString().split('T')[0];
 
   const handleDateChange = (e) => {
     const selectedDate = e.target.value;
@@ -120,6 +118,7 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
                       type="date"
                       id="date"
                       min={today}
+                      max={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
                       value={date}
                       onChange={handleDateChange}
                       className="input"
@@ -152,19 +151,18 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
                     <ClockIcon className="w-4 h-4" /> Select Time*
                   </label>
                   
-                  {date ? (
-                    isLoading ? (
+                  {isLoading ? (
                       <div className="flex justify-center py-6">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
                       </div>
                     ) : availableTimeSlots.length > 0 ? (
-                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-4">
                         {availableTimeSlots.map(timeSlot => (
                           <button
                             type="button"
                             key={timeSlot}
                             onClick={() => handleTimeSelect(timeSlot)}
-                            className={`py-2 px-3 rounded-lg text-center transition-colors ${
+                            className={`py-2 px-3 rounded-lg text-center transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
                               time === timeSlot
                                 ? 'bg-primary text-white'
                                 : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600'
@@ -175,13 +173,8 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
                         ))}
                       </div>
                     ) : (
-                      <p className="text-surface-500 dark:text-surface-400 py-2">
-                        No available time slots for this date.
-                      </p>
-                    )
-                  ) : (
-                    <p className="text-surface-500 dark:text-surface-400 py-2">
-                      Please select a date first to see available times.
+                      <p className="text-surface-500 dark:text-surface-400 py-2 mb-4">
+                        {date ? 'No available time slots for this date.' : 'Please select a date first to see available times.'}
                     </p>
                   )}
                 </div>
