@@ -395,13 +395,11 @@ const MainFeature = () => {
                             </div>
                           </div>
                         )}
-                        ))}
+                          </div>
+                        )}
                       </div>
-                        </div>
-                      </>
-                      ) : (
-                        No available time slots for this date.
-                      </div>
+                    ) : (
+                      <div className="text-surface-500 dark:text-surface-400 py-2 text">
                   )}
                 </div>
                 
