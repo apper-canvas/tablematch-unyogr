@@ -9,7 +9,7 @@ const MainFeature = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [showReservationForm, setShowReservationForm] = useState(false);
   
-  // Reservation form state
+  // Reservation form state initialized with today's date
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [partySize, setPartySize] = useState(2);
@@ -63,9 +63,15 @@ const MainFeature = () => {
     }
   }, [date]);
 
+  // Get today's date in YYYY-MM-DD format for min date in date picker
+  const today = new Date().toISOString().split('T')[0];
+
   const handleDateChange = (e) => {
-    setDate(e.target.value);
-    setTime(''); // Reset time when date changes
+    const selectedDate = e.target.value;
+    if (selectedDate) {
+      setDate(selectedDate);
+      setTime(''); // Reset time when date changes
+    }
   };
 
   const handleTimeSelect = (selectedTime) => {
@@ -125,9 +131,6 @@ const MainFeature = () => {
     setStep(1);
     setShowReservationForm(false);
   };
-
-  // Get today's date in YYYY-MM-DD format for min date in date picker
-  const today = new Date().toISOString().split('T')[0];
 
   return (
     <section className="mb-12">

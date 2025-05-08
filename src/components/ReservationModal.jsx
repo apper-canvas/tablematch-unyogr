@@ -48,9 +48,15 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
     }
   }, [date]);
 
+  // Get today's date in YYYY-MM-DD format for min date in date picker
+  const today = new Date().toISOString().split('T')[0];
+
   const handleDateChange = (e) => {
-    setDate(e.target.value);
-    setTime(''); // Reset time when date changes
+    const selectedDate = e.target.value;
+    if (selectedDate) {
+      setDate(selectedDate);
+      setTime(''); // Reset time when date changes
+    }
   };
 
   const handleTimeSelect = (selectedTime) => {
@@ -81,9 +87,6 @@ const ReservationModal = ({ isOpen, onClose, restaurant }) => {
       toast.success(`Reservation confirmed at ${restaurant.name}! A confirmation has been sent to your email.`);
     }, 1500);
   };
-
-  // Get today's date in YYYY-MM-DD format for min date in date picker
-  const today = new Date().toISOString().split('T')[0];
 
   return (
     <AnimatePresence>
