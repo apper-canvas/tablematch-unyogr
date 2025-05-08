@@ -57,7 +57,19 @@ const MainFeature = () => {
       setIsLoading(true);
       // Simulate API call for available time slots
       setTimeout(() => {
-        const mockTimeSlots = ['17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'];
+        // Organized time slots by meal period
+        const mockTimeSlots = {
+          lunch: ['11:30', '12:00', '12:30', '13:00', '13:30', '14:00'],
+          afternoon: ['14:30', '15:00', '15:30', '16:00', '16:30'],
+          dinner: ['17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'],
+          lateNight: ['22:00', '22:30']
+        };
+        
+        // Filter available slots based on current time if date is today
+        if (date === today) {
+          // For demo purposes, just showing all slots
+        }
+        
         setAvailableTimeSlots(mockTimeSlots);
         setIsLoading(false);
       }, 800);
@@ -270,26 +282,123 @@ const MainFeature = () => {
                       <div className="flex justify-center py-6">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
                       </div>
-                    ) : availableTimeSlots.length > 0 ? (
-                      <div>
-                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-                          {availableTimeSlots.map(timeSlot => (
-                            <button
-                              key={timeSlot}
-                              onClick={() => handleTimeSelect(timeSlot)}
-                              className={`py-2 px-3 rounded-lg text-center transition-colors ${
-                                time === timeSlot
-                                  ? 'bg-primary text-white'
-                                  : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600'
-                              }`}
-                            >
-                              {timeSlot}
-                            </button>
-                          ))}
+                    ) : availableTimeSlots && Object.keys(availableTimeSlots).length > 0 ? (
+                      <div className="space-y-6">
+                        {/* Lunch time slots */}
+                        {availableTimeSlots.lunch && availableTimeSlots.lunch.length > 0 && (
+                          <div className="mb-4">
+                            <h4 className="text-sm font-medium mb-2 text-surface-600 dark:text-surface-300 flex items-center">
+                              <span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 p-1 rounded mr-2">
+                                🍽️
+                              </span>
+                              Lunch
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {availableTimeSlots.lunch.map(timeSlot => (
+                                <button
+                                  key={timeSlot}
+                                  type="button"
+                                  onClick={() => handleTimeSelect(timeSlot)}
+                                  className={`py-2 px-3.5 rounded-lg text-center transition-all duration-200 ${
+                                    time === timeSlot
+                                      ? 'bg-primary text-white shadow-md scale-105 font-medium'
+                                      : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 hover:scale-105'
+                                  }`}
+                                >
+                                  {timeSlot}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Afternoon time slots */}
+                        {availableTimeSlots.afternoon && availableTimeSlots.afternoon.length > 0 && (
+                          <div className="mb-4">
+                            <h4 className="text-sm font-medium mb-2 text-surface-600 dark:text-surface-300 flex items-center">
+                              <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 p-1 rounded mr-2">
+                                ☕
+                              </span>
+                              Afternoon
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {availableTimeSlots.afternoon.map(timeSlot => (
+                                <button
+                                  key={timeSlot}
+                                  type="button"
+                                  onClick={() => handleTimeSelect(timeSlot)}
+                                  className={`py-2 px-3.5 rounded-lg text-center transition-all duration-200 ${
+                                    time === timeSlot
+                                      ? 'bg-primary text-white shadow-md scale-105 font-medium'
+                                      : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 hover:scale-105'
+                                  }`}
+                                >
+                                  {timeSlot}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Dinner time slots */}
+                        {availableTimeSlots.dinner && availableTimeSlots.dinner.length > 0 && (
+                          <div className="mb-4">
+                            <h4 className="text-sm font-medium mb-2 text-surface-600 dark:text-surface-300 flex items-center">
+                              <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 p-1 rounded mr-2">
+                                🍷
+                              </span>
+                              Dinner
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {availableTimeSlots.dinner.map(timeSlot => (
+                                <button
+                                  key={timeSlot}
+                                  type="button"
+                                  onClick={() => handleTimeSelect(timeSlot)}
+                                  className={`py-2 px-3.5 rounded-lg text-center transition-all duration-200 ${
+                                    time === timeSlot
+                                      ? 'bg-primary text-white shadow-md scale-105 font-medium'
+                                      : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 hover:scale-105'
+                                  }`}
+                                >
+                                  {timeSlot}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Late Night time slots */}
+                        {availableTimeSlots.lateNight && availableTimeSlots.lateNight.length > 0 && (
+                          <div>
+                            <h4 className="text-sm font-medium mb-2 text-surface-600 dark:text-surface-300 flex items-center">
+                              <span className="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 p-1 rounded mr-2">
+                                🌙
+                              </span>
+                              Late Night
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {availableTimeSlots.lateNight.map(timeSlot => (
+                                <button
+                                  key={timeSlot}
+                                  type="button"
+                                  onClick={() => handleTimeSelect(timeSlot)}
+                                  className={`py-2 px-3.5 rounded-lg text-center transition-all duration-200 ${
+                                    time === timeSlot
+                                      ? 'bg-primary text-white shadow-md scale-105 font-medium'
+                                      : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 hover:scale-105'
+                                  }`}
+                                >
+                                  {timeSlot}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                         </div>
                       </div>
                     ) : (
-                      <div className="text-surface-500 dark:text-surface-400 py-2">
+                      <div className="text-surface-500 dark:text-surface-400 py-2 text-center bg-surface-50 dark:bg-surface-800 rounded-lg p-4">
                         No available time slots for this date.
                       </div>
                   )}
