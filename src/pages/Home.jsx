@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
 import ReservationModal from '../components/reservationModal';
-const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCuisine, setSelectedCuisine] = useState('all');
