@@ -3,11 +3,13 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
+import ReservationModal from '../components/ReservationModal';
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCuisine, setSelectedCuisine] = useState('all');
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
   const MapPinIcon = getIcon('MapPin');
@@ -88,6 +90,11 @@ const Home = () => {
 
   const handleCuisineChange = (e) => {
     setSelectedCuisine(e.target.value);
+  };
+
+  const handleReserveTable = (restaurant) => {
+    setSelectedRestaurant(restaurant);
+    toast.info(`Preparing reservation for ${restaurant.name}`);
   };
 
   const filteredRestaurants = restaurants.filter(restaurant => {
@@ -203,7 +210,7 @@ const Home = () => {
                     </span>
                     <button 
                       onClick={() => {
-                        toast.success(`Selected ${restaurant.name} for reservation`);
+                        handleReserveTable(restaurant);
                       }}
                       className="btn btn-primary"
                     >
@@ -223,6 +230,12 @@ const Home = () => {
       </section>
 
       <MainFeature />
+      
+      <ReservationModal 
+        isOpen={!!selectedRestaurant} 
+        onClose={() => setSelectedRestaurant(null)} 
+        restaurant={selectedRestaurant}
+      />
     </div>
   );
 };
