@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
-import ReservationModal from '../components/reservationModal';
+import ReservationModal from '../components/ReservationModal';
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
